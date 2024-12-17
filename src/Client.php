@@ -14,7 +14,7 @@ class Client
         $this->secret = $secret;
     }
 
-    public function registerIM(array $data)
+    public function registerIM($data)
     {
         return self::restApiUseAdmin("chat/user/register", $data);
     }
@@ -65,7 +65,7 @@ class Client
         return self::restApiUseAdmin("chat/group/create", $data);
     }
 
-    public function joinGroup(string $uname, string $group)
+    public function joinGroup($uname, $group)
     {
         return self::restApiUseAdmin("chat/admin/addUserToGroup", [
             "uname" => $uname,
