@@ -1,0 +1,12 @@
+networks:
+  default:
+    external: true
+    name: leftsky
+services:
+  service:
+    image: leftsky/php:7.4
+    volumes:
+      - ./:/var/www
+    networks:
+      default:
+        ipv4_address: 172.191.0.180

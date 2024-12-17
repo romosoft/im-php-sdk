@@ -1,0 +1,25 @@
+{
+  "name": "romosoft/im",
+  "description": "融茂软件 IM PHP SDK",
+  "authors": [
+    {
+      "name": "leftsky",
+      "email": "leftsky@vip.qq.com"
+    }
+  ],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Leftsky\\ThinkphpHelp\\": "src/"
+    },
+    "files": [
+      "src/Client.php"
+    ]
+  },
+  "require": {
+    "php": "^7.3",
+    "symfony/var-dumper": "^5.4",
+    "guzzlehttp/guzzle": "^7.0.1",
+    "leftsky/php_define": "^0.0.4"
+  }
+}
