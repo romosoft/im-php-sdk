@@ -1,4 +1,5 @@
 <?php
+namespace Romosoft\IM;
 
 use GuzzleHttp\Client as HttpClient;
 
