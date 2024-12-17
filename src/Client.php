@@ -1,4 +1,5 @@
 <?php
+
 namespace Romosoft\IM;
 
 use GuzzleHttp\Client as HttpClient;
@@ -15,14 +16,21 @@ class Client
         $this->secret = $secret;
     }
 
-    public function registerIM($data)
+    public function register($avatar, $nickname, $username)
     {
-        return self::restApiUseAdmin("chat/user/register", $data);
+        if (!$avatar || !$nickname || !$username) {
+            return null;
+        }
+        return $this->restApiUseAdmin("chat/user/register", [
+            "avatar" => $avatar,
+            "nickname" => $nickname,
+            "name" => $username
+        ]);
     }
 
-    public function loginIM($name)
+    public function login($username)
     {
-        return self::restApiUseAdmin("chat/user/login", ["name" => $name]);
+        return $this->restApiUseAdmin("chat/user/login", ["name" => $username]);
     }
 
     private function restApiUseAdmin($uri, $json)
@@ -56,21 +64,21 @@ class Client
         return $rt;
     }
 
-    public function createGroup($replace_user, $avatar, $name)
+    public function createGroup($username, $avatar, $groupName)
     {
         $data = [
-            "replace_user" => $replace_user,
-            "name" => trim(substr($name, 0, 20)),
+            "replace_user" => $username,
+            "name" => trim(substr($groupName, 0, 20)),
             "avatar" => $avatar
         ];
-        return self::restApiUseAdmin("chat/group/create", $data);
+        return $this->restApiUseAdmin("chat/group/create", $data);
     }
 
-    public function joinGroup($uname, $group)
+    public function joinGroup($username, $groupCode)
     {
-        return self::restApiUseAdmin("chat/admin/addUserToGroup", [
-            "uname" => $uname,
-            "group" => $group
+        return $this->restApiUseAdmin("chat/admin/addUserToGroup", [
+            "uname" => $username,
+            "group" => $groupCode
         ]);
     }
 
