@@ -10,7 +10,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Leftsky\\ThinkphpHelp\\": "src/"
+      "Romosoft\\IM\\": "src/"
     },
     "files": [
       "src/Client.php"
