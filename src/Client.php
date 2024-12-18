@@ -50,16 +50,19 @@ class Client
 
         $code = $response->getStatusCode();
         if ($code !== 200) {
-            return null;
+            throw new \Exception("请求失败");
+//            return null;
         }
         $content = $response->getBody()->getContents();
         if (!is_json($content)) {
-            return null;
+            throw new \Exception("返回数据不是json");
+//            return null;
         }
         $content = json_decode($content, true);
         $rt = $content["data"] ?? null;
         if ($content["code"] == ERR_SUCCESS && $rt == null) {
-            return true;
+            throw new \Exception("返回数据为空");
+//            return true;
         }
         return $rt;
     }
