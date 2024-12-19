@@ -19,7 +19,11 @@ class Client
     public function register($avatar, $nickname, $username)
     {
         if (!$avatar || !$nickname || !$username) {
-            return null;
+            throw new \Exception("参数错误");
+        }
+        // 判断name是否是全英文
+        if (!preg_match("/^[a-zA-Z0-9_]+$/", $username)) {
+            throw new \Exception("用户名只能包含字母、数字和下划线");
         }
         return $this->restApiUseAdmin("chat/user/register", [
             "avatar" => $avatar,
@@ -48,8 +52,7 @@ class Client
             "json" => $json
         ]);
 
-        $code = $response->getStatusCode();
-        if ($code !== 200) {
+        if ($response->getStatusCode() !== 200) {
             throw new \Exception("请求失败");
         }
         $content = $response->getBody()->getContents();
@@ -58,10 +61,15 @@ class Client
         }
         $content = json_decode($content, true);
         $rt = $content["data"] ?? null;
-        if ($content["code"] == ERR_SUCCESS && $rt == null) {
-            throw new \Exception("返回数据为空");
+        $code = $content["code"] ?? null;
+        $msg = $content["msg"] ?? null;
+        if ($code == ERR_SUCCESS) {
+            if (!$rt) {
+                throw new \Exception("返回数据为空");
+            }
+            return $rt;
         }
-        return $rt;
+        throw new \Exception("$code $msg");
     }
 
     public function createGroup($username, $avatar, $groupName)
